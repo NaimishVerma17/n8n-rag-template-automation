@@ -4,15 +4,9 @@ Absolutely. Here's a *cloud-based step-by-step guide* to build a *LangChain + Cl
 
 ## ✅ Goal
 
-You’ll deploy a chatbot that:
+You'll deploy a chatbot that:
 
-* Uses *Claude 3.5/3.7* (via Anthropic API)
-* Answers *only from your uploaded documents*
-* Accepts *images*
-* Runs *fully in the cloud* (no local servers)
-* Exposes a *simple API* (for your webpage frontend)
-
----
+* Uses *Claude 3.5/3.7* (via Anthropic API) with a predefined system prompt:
 
 ## 🧱 Stack Overview
 

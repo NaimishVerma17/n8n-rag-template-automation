@@ -1,0 +1,103 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "documentId": "={ myGoogleSheetsDocId }",
+        "sheetName": "Sheet1",
+        "options": {}
+      },
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "={ myGoogleSheetsCredentials }"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "lookup",
+        "query": "={{$node[\"Google Sheets\"].json[\"unternehmen\"]}} {{$node[\"Google Sheets\"].json[\"adresse\"]}}",
+        "language": "de"
+      },
+      "name": "Google Places",
+      "type": "n8n-nodes-base.googlePlaces",
+      "typeVersion": 1,
+      "position": [
+        480,
+        300
+      ],
+      "credentials": {
+        "googlePlacesApi": {
+          "id": "={ myGooglePlacesCredentials }"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": "={ myGoogleSheetsDocId }",
+        "sheetName": "Sheet1",
+        "columnToMatchOn": "unternehmen",
+        "valueToMatchOn": "={{$node[\"Google Sheets\"].json[\"unternehmen\"]}}",
+        "fieldsUi": {
+          "values": [
+            {
+              "column": "place_id",
+              "fieldValue": "={{$node[\"Google Places\"].json[\"candidates\"][0][\"place_id\"]}}"
+            },
+            {
+              "column": "website", 
+              "fieldValue": "={{$node[\"Google Places\"].json[\"candidates\"][0][\"website\"]}}"
+            }
+          ]
+        },
+        "options": {
+          "valueInputMode": "USER_ENTERED"
+        }
+      },
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "={ myGoogleSheetsCredentials }"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Google Places",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Places": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

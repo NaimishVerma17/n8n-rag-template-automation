@@ -165,23 +165,23 @@ def get_conversational_chain(vectorstore):
 
     # Anthropic model
     
-    # llm = ChatAnthropic(
-    #     anthropic_api_key=CLAUDE_API_KEY,
-    #     model="claude-3-opus-20240229",
-    #     temperature=0,
-    #     streaming=True,
-    #     callback_manager=callback_manager,
-    # )
-    
-    # Open AI model
-    
-    llm = ChatOpenAI(
-        openai_api_key=OPENAI_API_KEY,
-        model_name="gpt-4o",  # or "gpt-4" or "gpt-3.5-turbo"
+    llm = ChatAnthropic(
+        anthropic_api_key=CLAUDE_API_KEY,
+        model="claude-3-opus-20240229",
         temperature=0,
         streaming=True,
         callback_manager=callback_manager,
     )
+
+    # Open AI model
+
+    # llm = ChatOpenAI(
+    #     openai_api_key=OPENAI_API_KEY,
+    #     model_name="gpt-4o",  # or "gpt-4" or "gpt-3.5-turbo"
+    #     temperature=0,
+    #     streaming=True,
+    #     callback_manager=callback_manager,
+    # )
 
     qa_chain = ConversationalRetrievalChain.from_llm(
         llm=llm,
